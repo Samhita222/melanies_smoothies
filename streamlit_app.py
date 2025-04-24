@@ -8,12 +8,6 @@ st.title(f":cup_with_straw: Customize your Smoothie! :cup_with_straw:")
 st.write(
   """Choose the fruits you want in your custom smoothie!"""
 )
-# option = st.selectbox(
-#     "What is your favourite fruit?",
-#     ("Banana", "Strawberry", "Peaches"),
-# )
-
-# st.write("Your favourite fruit is:", option)
 
 name_on_order = st.text_input("Name on smoothie:")
 st.write("The name on your smoothie will be", name_on_order)
@@ -33,16 +27,16 @@ if ingredients_list:
 
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
+        st.write(fruit_chosen)
         st.subheader(fruit_chosen + 'Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width = True)
 
-    # st.write(ingredients_string)
 
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
             values ('""" + ingredients_string + """','"""+name_on_order+"""')"""
 
-    st.write(my_insert_stmt)
+    # st.write(my_insert_stmt)
     
     time_to_insert= st.button("Submit Order")
     if time_to_insert:
